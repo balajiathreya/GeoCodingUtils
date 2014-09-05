@@ -17,8 +17,7 @@ def main(argv):
 	json_data= json.load(open(INPUT_JSON_FILE))
 	data = json_data['data']
 
-	for i in range(4):
-		entry = data[i]
+	for entry in data:
 		loc_name = entry[LOC_FIELD_NAME]
 		print "Loc name : " + loc_name
 		location = get_loc_coords(loc_name)
@@ -39,16 +38,18 @@ def main(argv):
 def get_loc_coords(loc_name):
 	url = 'https://maps.googleapis.com/maps/api/geocode/json?address='+loc_name+'&key='+GOOG_GEOCODING_KEY
 	req = urllib2.Request(url)
-	response = urllib2.urlopen(req)
-	data = response.read()
-	resultJSON = json.loads(data)
+	try:
+		response = urllib2.urlopen(req)
+		data = response.read()
+		resultJSON = json.loads(data)
 
-	if resultJSON['status'] == 'OK':
-		results = resultJSON['results'][0]
-		location = results['geometry']['location']
-		print location
-		return location
-		
+		if resultJSON['status'] == 'OK':
+			results = resultJSON['results'][0]
+			location = results['geometry']['location']
+			print location
+			return location
+	except urllib2.HTTPError, err:
+		print err
 	return None
 
 
