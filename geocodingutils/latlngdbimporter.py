@@ -3,7 +3,7 @@ import sys, credentials, sqlite3, urllib2, json, time
 '''
 usage:
 1. Add the google geocoding key to credentials.py
-2. python latlonimporter.py DB_FILE TABLE_NAME LOCATION_COLUMN_INDEX 
+2. python latlngdbimporter.py DB_FILE TABLE_NAME LOCATION_COLUMN_INDEX 
 3. comment out the call to addLatLngColumns the first time you run the script
 
 Note:. Added a one second delay to querying the google API as it has some usage limits
